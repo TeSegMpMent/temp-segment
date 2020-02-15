@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 _run:
     notify_on_fail: &notify_on_fail
