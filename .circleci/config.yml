@@ -53,9 +53,9 @@ jobs:
       - run:
           name: NetStandard20 code coverage
           command: |
+            cd Test.NetStandard20
             dotnet restore
             dotnet build
-            cd Test.NetStandard20
             minicover instrument --workdir ../ --assemblies Test.NetStandard20/**/bin/**/*.dll --sources Analytics/**/*.cs --tests Test.NetStandard20/**/*.cs
             minicover reset
             dotnet test --no-build
