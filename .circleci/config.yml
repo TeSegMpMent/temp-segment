@@ -7,6 +7,8 @@ _run:
         wget https://raw.githubusercontent.com/segmentio/circleci-notifications/master/slack-notify-branch.sh
         chmod u+x slack-notify-branch.sh
         BUILD_STATUS="Failed" NOTIFY_BRANCH="master scheduled_e2e_testing" ./slack-notify-branch.sh
+orbs:
+  win: circleci/windows@2.2.0
 
 jobs:
   build:
@@ -36,8 +38,8 @@ jobs:
       - run: nuget pack Analytics.nuspec
   coverage:
     working_directory: /coverage
-    docker:  
-      - image: microsoft/dotnet:2.2-sdk
+    executor:  
+      name: win/default
     environment:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_CLI_TELEMETRY_OUTPUT: 1
@@ -45,7 +47,6 @@ jobs:
       - run:
           name: Install minicover tool
           command: |
-            echo 'export PATH=$HOME/.dotnet/tools:$PATH' >> $BASH_ENV
             dotnet tool install -g minicover --version 3.0.6
       - checkout
       - run: chmod +x Test.NetStandard20/coverage_report.sh
@@ -119,19 +120,3 @@ workflows:
     jobs:
       - build
       - coverage
-      - test
-      - test_20
-      - test_35
-      - test_45
-      - test_e2e
-  scheduled_e2e_test:
-    triggers:
-      - schedule:
-          cron: "25 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-                - scheduled_e2e_testing
-    jobs:
-      - test_e2e
