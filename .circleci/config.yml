@@ -64,7 +64,7 @@ jobs:
             cd ..
             codecov -f ./coverage.json
   coverage_net:
-    workdir: /coverage_net
+    working_directory: /coverage_net
     executor:  
       name: win/default
     steps:
