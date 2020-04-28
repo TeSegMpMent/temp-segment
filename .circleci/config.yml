@@ -37,7 +37,7 @@ jobs:
       - run: msbuild Analytics/Analytics.csproj /t:restore
       - run:
           name: Generating Nuget Package
-          command: msbuild /t:pack /p:Configuration=Release /p:PackageOutputPath="/packages" Analytics/Analytics.csproj
+          command: dotnet pack -o /packages -c Release Analytics\Analytics.csproj
       - store_artifacts:
           path: /packages/
   coverage:
