@@ -36,9 +36,9 @@ jobs:
       - checkout
       - run:
           name: Generating Nuget Package
-          command: dotnet pack Analytics/Analytics.csproj -o /temp/
+          command: msbuild t:/pack /p:Configuration=Release pack Analytics/Analytics.csproj -o /temp/a.nupkg
       - store_artifacts:
-          path: /tmp/artifact-1
+          path: /tmp/a.nupkg
           destination: Nuget
   coverage:
     working_directory: /coverage
