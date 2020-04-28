@@ -36,9 +36,9 @@ jobs:
       - checkout
       - run:
           name: Generating Nuget Package
-          command: msbuild t:/pack /p:Configuration=Release /p:PackageOutputPath="/temp/a.nupkg" Analytics/Analytics.csproj
+          command: msbuild /t:pack /p:Configuration=Release /p:PackageOutputPath="/packages" Analytics/Analytics.csproj
       - store_artifacts:
-          path: /tmp/a.nupkg
+          path: /packages/*.nupkg
           destination: Nuget
   coverage:
     working_directory: /coverage
