@@ -33,8 +33,9 @@ jobs:
     executor:  
       name: win/default
     steps:
+      - checkout
       - run:
-          name: Install code coverage tools
+          name: Generating Nuget Package
           command: dotnet pack Analytics/Analytics.csproj -o /temp/
       - store_artifacts:
           path: /tmp/artifact-1
