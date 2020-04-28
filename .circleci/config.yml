@@ -178,7 +178,7 @@ workflows:
             - test_20
       - coverage_net35:
           requires:
-            - test_20
+            - test_35
       - coverage_net45:
           requires:
             - test_45
