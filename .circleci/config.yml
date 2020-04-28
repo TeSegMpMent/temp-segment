@@ -36,7 +36,7 @@ jobs:
       - checkout
       - run:
           name: Generating Nuget Package
-          command: msbuild t:/pack /p:Configuration=Release pack Analytics/Analytics.csproj -o /temp/a.nupkg
+          command: msbuild t:/pack /p:Configuration=Release /p:PackageOutputPath="/temp/a.nupkg" Analytics/Analytics.csproj
       - store_artifacts:
           path: /tmp/a.nupkg
           destination: Nuget
@@ -171,14 +171,6 @@ workflows:
       - pack:
           requires:
             - build
-      - coverage
-      - coverage_net35  
-      - coverage_net45
-      - test
-      - test_20
-      - test_35
-      - test_45
-      - test_e2e
   scheduled_e2e_test:
     triggers:
       - schedule:
