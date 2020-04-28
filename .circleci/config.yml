@@ -34,7 +34,6 @@ jobs:
       name: win/default
     steps:
       - checkout
-      - run: msbuild Analytics/Analytics.csproj /t:restore
       - run:
           name: Generating Nuget Package
           command: dotnet pack -o /packages -c Release Analytics\Analytics.csproj
