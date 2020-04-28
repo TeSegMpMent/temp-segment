@@ -168,9 +168,27 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - test
+      - test_20
+      - test_35
+      - test_45
+      - test_e2e
+      - coverage:
+          requires:
+            - test_20
+      - coverage_net35:
+          requires:
+            - test_20
+      - coverage_net45:
+          requires:
+            - test_45
       - pack:
           requires:
             - build
+            - coverage
+            - coverage_net35
+            - coverage_net45
+            - test_e2e
   scheduled_e2e_test:
     triggers:
       - schedule:
