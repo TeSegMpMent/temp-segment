@@ -27,8 +27,18 @@ jobs:
       # Checkout source code and try to build & pack
       - checkout
       - run: msbuild Analytics/Analytics.csproj /t:restore
-      - run: msbuild Analytics/Analytics.csproj /p:Configuration=Release
-      - run: nuget pack Analytics.nuspec
+      - run: msbuild Analytics/Analytics.csproj /p:Configuration=Release  
+  pack:
+    working_directory: /pack
+    executor:  
+      name: win/default
+    steps:
+      - run:
+          name: Install code coverage tools
+          command: dotnet pack Analytics/Analytics.csproj -o /temp/
+      - store_artifacts:
+          path: /tmp/artifact-1
+          destination: Nuget
   coverage:
     working_directory: /coverage
     docker:  
@@ -157,6 +167,9 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - pack
+          requires:
+            - build
       - coverage
       - coverage_net35  
       - coverage_net45
